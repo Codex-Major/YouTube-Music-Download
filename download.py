@@ -9,7 +9,7 @@ if not (os.path.exists("links.txt")):
 if os.path.exists('./music'):
     pass
 else:
-    sys.stdout.write('')
+    sys.stdout.write('[+] Creating ./music directory.')
     os.mkdir('./music')
 
 with open('links.txt','r') as f:
