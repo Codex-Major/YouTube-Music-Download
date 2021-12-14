@@ -37,11 +37,11 @@ with open('links.txt','r') as f:
             if (os.path.exists(f"./music/{genre}/{artist}")):
                 pass
             else:
-                sys.stdout.write(f"[+] Adding folder for {artist} in te {genre} genre.\n")
+                sys.stdout.write(f"[+] Adding folder for {artist} in the {genre} genre.\n")
                 os.mkdir(f"./music/{genre}/{artist}")
 
 
-        if ("www.youtube.com" in link):
+        if ("youtube.com" in link):
             sys.stdout.write(f'[*] Handling: {link}\n')
             video=YouTube(link)
             badFilenameSymbols=["!","@","#","$","%","&","*","=","|","{","}",":","'",'"',"\\","/","?","<",">"]
@@ -58,6 +58,7 @@ with open('links.txt','r') as f:
                     path=f'./music/{genre}/{artist}/'
             else:
                 path=f'./music/unkown/unkown/'
-            video.streams.get_highest_resolution().download(path)
-    sys.stdout.write("[*] All done!")
-         
+            audio=video.streams.filter(only_audio=True).all()
+            audio[0].download(path)
+    sys.stdout.write("[*] All done!\n")
+    
