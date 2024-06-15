@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+        <div class="loading-container" id="loading-container">
+            <img src="{{ url_for('static', filename='images/loader.gif') }}" alt="Searching..." class="loading-image" id="loading-image">
+        </div>
+        <h2>YouTube-Downloader Search:</h2>
+        <form id="search-form" method="POST" action="/search.html">
+            <div class="form-group">
+                <label for="query">Search:</label>
+                <input type="text" class="form-control" id="query" aria-describedby="query" name="query" placeholder="Video title here...">
+            </div>
+        </form>
+        <script>
+            // JavaScript to show/hide loading container on form submission
+            document.getElementById('search-form').addEventListener('submit', function() {
+                document.getElementById('loading-container').style.display = 'block';
+            });
+        </script>
+        <br>
+    {% if results %}
+        <p>Results for: "{{ query }}" </p>
+        {% for result in results %}
+            <hr>
+            <div class="result-card" id="result-card">
+                <div class="result-image" id="result-image">
+                    <a href="https://youtube.com/watch?v={{ result.video_id }}"><img src="{{ result.thumbnail_url }}" width="168px" height="94px" style="border-radius: 10px; margin-right: 16px;"></a>
+                </div>
+                <div class="result-title" id="result-title">
+                    <h3>{{ result.title }}</h3>
+                </div>
+                <div class="result-link" id="result-link">
+                    <p>Original link: <a href="https://youtube.com/watch?v={{ result.video_id }}">https://youtube.com/watch?v={{ result.video_id }}</a></p>
+                </div>
+                <div class="result-table" id="result-table">
+                    <table>
+                        <tr><th>Audio+Video streams:</th></tr>
+                        <tbody>
+                        {% for stream in result.streams %}
+                            {% if stream.includes_audio_track and stream.includes_video_track %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url_for('download', id=result.video_id, itag=stream.itag) }}" ><img src="{{ url_for('static', filename='images/dl-icon-small.png') }}" style=" margin: 0 auto;"> {{ stream.mime_type }} {{ stream.resolution }}@{{ stream.fps }}fps {{ stream.filesize_mb }}MB</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="result-table" id="result-table">
+                    <table>
+                        <tr><th>All streams:</th></tr>
+                        {% for stream in result.streams %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('download', id=result.video_id, itag=stream.itag) }}"><img src="{{ url_for('static', filename='images/dl-icon-small.png') }}"> {{ stream.mime_type }} {{ stream.resolution }}@{{ stream.fps }}fps {{ stream.filesize_mb }}MB</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
+    {% endif %}
+{% endblock %}
