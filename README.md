@@ -1,6 +1,10 @@
 # YouTube-Music-Download
-Local web-page created with Flask and pytube, designed to download audio and/or video from YouTube.
+Local web-page created with Flask and pytube, designed to download audio and/or video from YouTube. Works on Windows and Linux!
 
+The time taken to display results may vary based on your internet speed. Files are downloaded into your default "Downloads" folder.
+
+*Please note, this tool does not support downloading age-restricted YouTube content, live-streams/podcasts, or Youtube Movies/TV.
+(This is due to current limitations with pytube's authentication support.)
 
 # Getting Started
    Start by cloning this repo...
