@@ -17,7 +17,7 @@ The time taken to display results may vary based on your internet speed. Files a
 
   Launching the web-server:
 
-    `python3 -m pip flask --app main run`
+    `python3 -m flask --app main run`
 
 # Index page
   [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
